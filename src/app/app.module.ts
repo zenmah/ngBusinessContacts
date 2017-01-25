@@ -1,3 +1,4 @@
+import { AuthMethods, AuthProviders } from 'angularfire2/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +19,10 @@ import firebaseConfig from './config/firebase.settings';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig, {
+        method: AuthMethods.Popup,
+        provider: AuthProviders.Google
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

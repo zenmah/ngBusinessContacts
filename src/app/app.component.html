@@ -1,6 +1,14 @@
 <h1>
-  {{title}}
+  {{title}} -  Welcome {{user | json}}
 </h1>
+<button md-raised-button (click)="login()">
+  <img width="30" src="google-logo.png" />Use My Google Account
+</button>
+<button md-raised-button (click)="logout()">
+  Logout
+</button>
+
+
 
 <ul *ngFor="let item of items | async"> 
   {{item.$key}} - {{item.$value}}</ul>
