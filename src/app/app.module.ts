@@ -1,3 +1,5 @@
+import { AuthService } from './services/auth.service';
+import { FirebaseService } from './services/firebase.service';
 import { AuthMethods, AuthProviders } from 'angularfire2/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -9,11 +11,13 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 
 import firebaseConfig from './config/firebase.settings';
+import { BusinessComponent } from './business/business.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BusinessComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,7 @@ import firebaseConfig from './config/firebase.settings';
         provider: AuthProviders.Google
     })
   ],
-  providers: [],
+  providers: [FirebaseService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
