@@ -19,9 +19,14 @@ export class ListBusinessComponent implements OnInit {
   ngOnInit() {
   }
 
-  onShowDetail(business: Business) {
-    this.showDetail.emit(business.$key);
+  onShowDetail(businessKey:string) {
+    this.showDetail.emit(businessKey);
   }
-
+  onShowEdit(businessKey: string) {
+    this.edit.emit(businessKey);
+  }
+  onDelete(businessKey: string) {
+    this.delete.emit(businessKey);
+  }
 
 }

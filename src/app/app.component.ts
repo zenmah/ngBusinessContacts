@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
 
   constructor(private af: AngularFire, private fbService: FirebaseService, private authService: AuthService) {
-    this.newBusiness = { category: null } as Business;
+    this.appState = 'default';
   }
 
   ngOnInit() {
@@ -56,9 +56,9 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  changeState(state: string, key?: string ) {
+  changeState(state: string, key?: string) {
     if (key) {
-      this.selectedBusiness = this.businesses.find( bs => bs.$key === key);
+      this.selectedBusiness = this.businesses.find(bs => bs.$key === key);
     }
     this.appState = state;
     if (state === 'add') {
@@ -66,18 +66,29 @@ export class AppComponent implements OnInit {
     }
   }
 
+
+
+
   filterCategory(category: string) {
     console.log(`filter on ${category}`);
     this.fbService.getBusinesses(category).subscribe(b => {
       this.businesses = b;
     });
-
-
-
   }
+
+
+
   onBusinessCreated(business: Business) {
     this.fbService.addBusiness(business);
     this.changeState('default');
   }
+  updateBusiness(businessUpdated: Business) {
+    this.fbService.updateBusiness(businessUpdated.$key as string, businessUpdated);
+  }
+  onDeleteBusiness(key: string) {
+    this.fbService.deleteBusiness(key);
+  }
+
+
 
 }

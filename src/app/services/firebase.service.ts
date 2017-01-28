@@ -38,6 +38,16 @@ export class FirebaseService {
   addBusiness(business: Business) {
     return (this.businesses.push(business));
   }
+  deleteBusiness(businessKey: string) {
+    return this.businesses.remove(businessKey);
+  }
 
+  updateBusiness(businessKey: string, updatedBusiness: any) {
+    // tslint:disable-next-line:prefer-const
+     const updObje = Object.assign({}, updatedBusiness);
+     delete updObje.$exists;
+     delete updObje.$key;
+     return this.businesses.update(businessKey, updObje);
+  }
 
 }

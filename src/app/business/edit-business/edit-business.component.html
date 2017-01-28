@@ -1,0 +1,54 @@
+<div class="card" *ngIf="business">
+  <div class="card-header">
+    <h4 class="card-title"> Edit Business {{business.company}}</h4>
+  </div>
+  <div class="card-block" >
+    <form (submit)="onSave()" #businessForm="ngForm">
+      <div class="form-group row ">
+        <label for="company" class="col-sm-2 col-form-label">Company</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="company" required [(ngModel)]="business.company" name="company">          </div>
+        <label for="category" class="col-sm-2 col-form-label">Category</label>
+        <div class="col-sm-4">
+          <select class="form-control custom-select" id="category" required [(ngModel)]="business.category" name="category">
+            <option selected>Choose a Category...</option>
+            <option *ngFor="let category of categories" [value]="category.name">{{category.name}}</option>
+          </select>
+
+        </div>
+      </div>
+      <div class="form-group row ">
+        <label for="years_in_business" class="col-sm-2 col-form-label">Years In Business</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" id="years_in_business" [(ngModel)]="business.years_in_business" name="years_in_business">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <textarea rows="3" class="form-control" id="description" [(ngModel)]="business.description" name="description"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group row ">
+        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" id="phone"  [(ngModel)]="business.phone" name="phone"> </div>
+        <label for="email" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-4">
+          <div class="input-group">
+            <span class="input-group-addon" id="email-addon">@</span>
+            <input type="text" class="form-control" name="email"  [(ngModel)]="business.email" aria-describedby="email-addon">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row ">
+        <button type="submit" class="btn btn-default" [disabled]="!businessForm.form.valid">Submit</button>
+      </div>
+
+
+    </form>
+  </div>
+</div>

@@ -6,17 +6,30 @@
     <h1 *ngIf="!user.auth"> Welcome - Please Login....</h1>
   </div>
 </div>
-
+ {{appState}}
+ <div [ngSwitch]="appState">
+   <span *ngSwitchCase="'add'">APPSTATE === app</span>
+   <span *ngSwitchCase="'extend'">APPSTATE === extend</span>
+   <span *ngSwitchCase="'default'">APPSTATE === default</span>
+   <span *ngSwitchCase="'edit'">APPSTATE === edit</span>
+   <span *ngSwitchDefault>DEFAULT</span>
+ </div>
 <br>
 
-<div class="container" *ngIf="user.auth">
 
-  <div *ngIf="appState!=='add'">
-    <button class="btn btn-primary" (click)="changeState('add')"> Add Business </button>
+<div class="container" *ngIf="user.auth">
+  <div [ngSwitch]="appState">
+    <div *ngSwitchCase="'add'">
+      <app-new-business [newBusiness]="newBusiness" [categories]="categories" (newBusinessRequest)="onBusinessCreated($event)"></app-new-business>
+    </div>
+    <div *ngSwitchDefault>
+      <button class="btn btn-primary" (click)="changeState('add')"> Add Business </button>
+    </div>
   </div>
-  <div *ngIf="appState==='add'">
-    <app-new-business [newBusiness]="newBusiness" [categories]="categories" (newBusinessRequest)="onBusinessCreated($event)"></app-new-business>
-    <br>
+  <div *ngIf="appState === 'edit'">
+    <app-edit-business [business]="selectedBusiness"  [categories]="categories"
+                      (save)="updateBusiness($event)" (cancel)="changeState('default')">
+    </app-edit-business>
   </div>
 
   <div class="row">
@@ -34,6 +47,6 @@
     <app-show-business [business]="selectedBusiness" (hide)="changeState('default')"></app-show-business>
   </div>
   <app-list-business  [businesses]="businesses"  [categories]="categories"
-                      (showDetail)="changeState('extend',$event)" (edit)="onEditBusiness($event)" (delete)="onDeleteBusiness($event)"
+                      (showDetail)="changeState('extend',$event)" (edit)="changeState('edit',$event)" (delete)="onDeleteBusiness($event)"
                       ></app-list-business>
 </div>
