@@ -1,0 +1,10 @@
+{
+  "1" : {
+    "name" : "IT-Company",
+    "description" : "This is a IT Company"
+  },
+  "2" : {
+    "name" : "Public Transport",
+    "description" : "Transporing People"
+  }
+}

@@ -1,96 +1,39 @@
 <div class="container">
-  <nav class="navbar navbar-toggleable-md navbar-light bg-faded " style="background-color: #e3f2fd;">
-<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-<a class="navbar-brand" href="#">Business Contacts</a>
-
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <ul class="navbar-nav mr-auto">
-
-  </ul>
-  <div>
-
-  </div>
-  <button class="btn btn-outline-sucess my-2 my-sm-0" (click)="login()" *ngIf="user==={}">
-      <img width="30" src="google-logo.png" />Use My Google Account
-    </button>
-  <button class="btn btn-outline-danger my-2 my-sm-0" (click)="logout()" *ngIf="user!=={}">
-      Logout
-    </button>
-</div>
-</nav>
+  <app-nav [user]="user"></app-nav>
 </div>
 <div class="container">
   <div class="page-header">
     <h1 *ngIf="!user.auth"> Welcome - Please Login....</h1>
-    <h1 *ngIf="user.auth"> Welcome - {{user.auth.displayName}}</h1>
   </div>
 </div>
 
+<br>
 
+<div class="container" *ngIf="user.auth">
 
-<div class="container" *ngIf="user!=={} ">
-  <div *ngIf="appState==='extend'">
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-danger" (click)="changeState('default')"> Back </button>
-      </div>
-    </div>
-    <div *ngFor="let business of businesses">
-      <div *ngIf="business.$key === currentKey">
-        <div class="row">
-          <div class="col">
-            <h3>{{business.company}}</h3>
-            <p>Category: {{business.Cateogory}}</p>
-            <p>Years in Business: {{business.years_in_business}}</p>
-            <p>{{business.description}}</p>
-          </div>
-          <div class="col">
-            <h3>Contact</h3>
-            <ul class="list-group">
-              <li class="list-group-item">Phone: </li>
-              <li class="list-group-item">Email: </li>
-              <li class="list-group-item">Street:</li>
-              <li class="list-group-item">City: </li>
-              <li class="list-group-item">State: </li>
-              <li class="list-group-item">ZipCode:</li>
-            </ul>
-
-          </div>
-        </div>
-      </div>
-    </div>
+  <div *ngIf="appState!=='add'">
+    <button class="btn btn-primary" (click)="changeState('add')"> Add Business </button>
   </div>
-
-
+  <div *ngIf="appState==='add'">
+    <app-new-business [newBusiness]="newBusiness" [categories]="categories" (newBusinessRequest)="onBusinessCreated($event)"></app-new-business>
+    <br>
+  </div>
 
   <div class="row">
-    <table class="table" style="background-color: #e3f2fd;">
-<thead class="thead-inverse">
-  <tr>
-    <th>#</th>
-    <th>Company</th>
-    <th>Category</th>
-    <th>Phone</th>
-    <th></th>
-  </tr>
-</thead>
-<tbody>
-  <tr *ngFor="let business of businesses">
-    <th scope="row">{{business.$key}} </th>
-    <td>{{business.company}}</td>
-    <td><span class="badge badge-primary pull-right">{{business.category}}</span></td>
-    <td>{{business.phone}}</td>
-    <td>
-      <button class="btn btn-primary my-2 my-sm-0" (click)="changeState('extend',business.$key)">     More   </button>
-      <button class="btn btn-default my-2 my-sm-0">     Edit   </button>
-      <button class="btn btn-danger my-2 my-sm-0">    Delete   </button>
-
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+    <div class="col"></div>
+    <div class="col">
+      <label> Filter Category </label>
+      <select class="custom-select" (change)="filterCategory(filteredCategory.value)" #filteredCategory>
+        <option ></option>
+        <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
+      </select>
+    </div>
+  </div>
+  <br>
+  <div class="card" *ngIf="appState==='extend'">
+    <app-show-business [business]="selectedBusiness" (hide)="changeState('default')"></app-show-business>
+  </div>
+  <app-list-business  [businesses]="businesses"  [categories]="categories"
+                      (showDetail)="changeState('extend',$event)" (edit)="onEditBusiness($event)" (delete)="onDeleteBusiness($event)"
+                      ></app-list-business>
 </div>

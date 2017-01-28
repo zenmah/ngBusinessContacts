@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="card-block">
+      <table class="table" style="background-color: #e3f2fd;">
+<thead class="thead-inverse">
+  <tr>
+    <th>Company</th>
+    <th>Category</th>
+    <th>Phone</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let business of businesses">
+    <td>{{business.company}}</td>
+    <td><span class="badge badge-primary pull-right">{{business.category}}</span></td>
+    <td>{{business.phone}}</td>
+    <td>
+      <button class="btn btn-primary my-2 my-sm-0" (click)="onShowDetail(business)">     More   </button>
+      <button class="btn btn-default my-2 my-sm-0">     Edit   </button>
+      <button class="btn btn-danger my-2 my-sm-0">    Delete   </button>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>

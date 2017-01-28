@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6"><h3>{{business.company}}</h3></div>
+      <div class="col-md-5"><h3>Contact</h3></div>
+      <div class="col-md-1 text-right">
+            <button class="btn btn-danger" (click)="onHide()"> Back </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-block">
+
+    <div class="row">
+      <div class="col">
+       
+        <p>Category: {{business.category}}</p>
+        <p>Years in Business: {{business.years_in_business}}</p>
+        <p>{{business.description}}</p>
+      </div>
+      <div class="col">
+        
+        <ul class="list-group">
+          <li class="list-group-item">Phone: </li>
+          <li class="list-group-item">Email: </li>
+          <li class="list-group-item">Street:</li>
+          <li class="list-group-item">City: </li>
+          <li class="list-group-item">State: </li>
+          <li class="list-group-item">ZipCode:</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>

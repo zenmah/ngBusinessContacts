@@ -1,3 +1,4 @@
+import { listeners } from 'cluster';
 import { Category } from './services/category';
 import { Business } from './services/business';
 import { AuthService } from './services/auth.service';
@@ -18,18 +19,21 @@ export class AppComponent implements OnInit {
   businesses: Business[];
   categories: Category[];
   appState: string;
-  currentKey: string;
+  selectedBusiness: Business;
+  newBusiness: Business;
 
 
-  constructor(private af: AngularFire, private fbService: FirebaseService, private authService: AuthService) { }
+
+  constructor(private af: AngularFire, private fbService: FirebaseService, private authService: AuthService) {
+    this.newBusiness = { category: null } as Business;
+  }
 
   ngOnInit() {
     this.af.auth.subscribe(user => {
       if (user) {
         // user logged in
         this.user = user;
-      }
-      else {
+      } else {
         // user not logged in
         this.user = {};
       }
@@ -37,9 +41,10 @@ export class AppComponent implements OnInit {
     this.fbService.getBusinesses().subscribe(b => {
       this.businesses = b;
     });
-    this.fbService.getBusinesses().subscribe(c => {
+    this.fbService.getCategories().subscribe(c => {
       this.categories = c;
     });
+
   }
 
   login() {
@@ -51,12 +56,28 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  changeState(state: string, key: string) {
-    if (key)
-    {
-      this.currentKey = key;
+  changeState(state: string, key?: string ) {
+    if (key) {
+      this.selectedBusiness = this.businesses.find( bs => bs.$key === key);
     }
     this.appState = state;
+    if (state === 'add') {
+      this.newBusiness = { category: null } as Business;
+    }
+  }
+
+  filterCategory(category: string) {
+    console.log(`filter on ${category}`);
+    this.fbService.getBusinesses(category).subscribe(b => {
+      this.businesses = b;
+    });
+
+
+
+  }
+  onBusinessCreated(business: Business) {
+    this.fbService.addBusiness(business);
+    this.changeState('default');
   }
 
 }

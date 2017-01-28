@@ -12,12 +12,22 @@ import { AngularFireModule } from 'angularfire2';
 
 import firebaseConfig from './config/firebase.settings';
 import { BusinessComponent } from './business/business.component';
+import { NewBusinessComponent } from './business/new-business/new-business.component';
+import { ListBusinessComponent } from './business/list-business/list-business.component';
+import { NavComponent } from './nav/nav.component';
+import { ShowBusinessComponent } from './business/show-business/show-business.component';
+import { EditBusinessComponent } from './business/edit-business/edit-business.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BusinessComponent
+    BusinessComponent,
+    NewBusinessComponent,
+    ListBusinessComponent,
+    NavComponent,
+    ShowBusinessComponent,
+    EditBusinessComponent
   ],
   imports: [
     BrowserModule,
